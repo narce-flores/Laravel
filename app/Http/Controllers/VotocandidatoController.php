@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Voto;
 use App\Models\Candidato;
 use App\Models\Votocandidato;
 
-
+use Illuminate\Support\Facades\DB;
 
 class VotocandidatoController extends Controller
 {
@@ -18,14 +19,16 @@ class VotocandidatoController extends Controller
      */
     public function index()
     {
-        $votos = DB::table('votocandidato')
+        $votocandidatos = DB::table('votocandidato')
             ->join('voto', 'votocandidato.voto_id', '=', 'voto.id')
             ->join('candidato', 'votocandidato.candidato_id', '=', 'candidato.id')
-            ->select('voto.periodo as eleccion', 'candidato.ubicacion as casilla', 'votos')
+            ->select('votocandidato.voto_id', 'voto.eleccion_id as voto', 'candidato.nombrecompleto as candidato', 'votos')
             ->get();
 
         return view("votocandidato/list",
-        compact("votoscandidato"));
+        compact("votocandidatos"));
+
+
     }
 
     /**
@@ -34,11 +37,9 @@ class VotocandidatoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-
     {
-         $votos = Voto::all();
-         $candidatos = Candidato::all();
-       
+        $votos = Voto::all();
+        $candidatos = Candidato::all();
 
         return view("votocandidato/create", 
         compact("votos","candidatos"));
@@ -52,8 +53,24 @@ class VotocandidatoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'voto_id' => 'required|integer',
+            'candidato_id' => 'required|integer',
+            'votos' => 'required|int'
+        ]);
+        
+        $data = [
+            "voto_id" => $request->voto_id,
+            "candidato_id" => $request->candidato_id ,
+            "votos" => $request->votos
+        ];
+        
+        Votocandidato::create($data);
+        return redirect('votocandidato')->with('success',
+            ' guardado satisfactoriamente ...');
+
     }
+
 
     /**
      * Display the specified resource.
@@ -74,7 +91,13 @@ class VotocandidatoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $votos = Voto::all();
+        $candidatos = Candidato::all();
+        $votocandidato = Votocandidato::find($id);
+
+        return view("votocandidato/edit", 
+        compact("votocandidato","votos","candidatos"));
+
     }
 
     /**
@@ -86,8 +109,24 @@ class VotocandidatoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'candidato_id' => 'required|integer',
+            'voto_id'=>'required|integer',
+            'votos' => 'required|int'
+        ]);
+        
+        $data = [
+            "candidato_id" => $request->candidato_id ,
+            "voto_id" => $request->voto_id,
+            "votos" => $request->votos
+        ];
+        
+        Votocandidato::find($id)->update($data);
+        return redirect('votocandidato')->with('success',
+            ' Cambio realizado ...');
+
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -97,6 +136,7 @@ class VotocandidatoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Votocandidato::find($id)->delete();
+        return redirect('votocandidato');
     }
 }

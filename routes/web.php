@@ -11,6 +11,7 @@ use App\Http\Controllers\EleccioncomiteController;
 use App\Http\Controllers\VotoController;
 use App\Http\Controllers\FuncionariocasillaController;
 use App\Http\Controllers\ImeiautorizadoController;
+use App\Http\Controllers\VotocandidatoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,3 +35,4 @@ Route::resource('eleccioncomite', EleccioncomiteController::class);
 Route::resource('voto', VotoController::class);
 Route::resource('funcionariocasilla', FuncionarioCasillaController::class);
 Route::resource('imeiautorizado', ImeiautorizadoController::class);
+Route::resource('votocandidato', VotocandidatoController::class);
