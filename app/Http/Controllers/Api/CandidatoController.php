@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\GenericController as GenericController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Candidato;
+
 class CandidatoController extends GenericController
 {
  /**
@@ -61,8 +62,8 @@ class CandidatoController extends GenericController
  'perfil' => $perfilcandidato,
  );
 
- if ($request->hasFile('foto')) $foto->move(public_path('img'), $fotocandidato);
- if ($request->hasFile('perfil')) $perfil->move(public_path('img'), $perfilcandidato);
+ if ($request->hasFile('foto')) $foto->move(public_path('uploads'), $fotocandidato);
+ if ($request->hasFile('perfil')) $perfil->move(public_path('uploads'), $perfilcandidato);
 
  $candidato = Candidato::create($campos);
  $resp = $this->sendResponse($candidato,
