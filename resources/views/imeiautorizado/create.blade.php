@@ -54,11 +54,15 @@
 			<div class="form-group">
 				@csrf
 				<label for="imei">imei:</label>
-				<input type="text" class="form-control" name="imei"/>
+				<input type="text" class="form-control" name="imei" id="imei"/>
 			</div>
 			
-			<button type="submit" class="btn btn-primary">Guardar</button>
+			<button type="submit" class="btn btn-primary" onClick="return validate()">Guardar</button>
 		</form>
 	</div>
 </div>
 @endsection
+
+@section('page-script')
+<script type="text/javascript" src="/js/imei.js"></script>
+@stop
