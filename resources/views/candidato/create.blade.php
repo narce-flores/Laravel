@@ -24,13 +24,13 @@ Agregar Candidato
 <div class="form-group">
 @csrf
 <label for="nombrecompleto">Nombre:</label>
-<input type="text" class="form-control" name="nombrecompleto"/>
+<input type="text" class="form-control" name="nombrecompleto" id="nombrecompleto"/>
 </div>
 
 <div class="form-group">
 @csrf
 <label for="foto">Foto</label>
-<input type="file" class="form-control" name="foto"/>
+<input type="file" class="form-control" name="foto" id="foto"/>
 </div>
 
 <div class="form-group">
@@ -45,11 +45,15 @@ Agregar Candidato
 <div class="form-group">
 @csrf
 <label for="perfil">Perfil</label>
-<input type="file" class="form-control" name="perfil"/>
+<input type="file" class="form-control" name="perfil" id="perfil"/>
 </div>
 
-<button type="submit" class="btn btn-primary">Guardar</button>
+<button type="submit" class="btn btn-primary" onClick="return validate()">Guardar</button>
 </form>
 </div>
 </div>
 @endsection
+
+@section('page-script')
+<script type="text/javascript" src="/js/candidato.js"></script>
+@stop

@@ -35,3 +35,4 @@
 
 @section('page-script')
 <script type="text/javascript" src="/js/casilla.js"></script>
+@stop
