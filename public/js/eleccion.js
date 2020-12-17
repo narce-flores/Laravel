@@ -1,37 +1,37 @@
 function validate(){
     let valid = true;
     if ($("#periodo").val().trim()==""){
-        alert("Escriba un Perdio");
+        alert("inserte un periodo");
         valid = false;
     }
 
     if ($("#fecha").val().trim() ==""){
-        alert("Seleccione la fecha");
+        alert(" la fecha no puede quedar vacio");
         valid = false;
     }
 
     if ($("#fechaapertura").val().trim() ==""){
-        alert("Seleccione una fecha de inicio");
+        alert("la fecha de inicio no puede quedar vacio");
         valid = false;
     }
 
     if ($("#horaapertura").val().trim() ==""){
-        alert("Seleccione una hora de inicio");
+        alert("la hora de apertura no puede quedar vacio");
         valid = false;
     }
 
     if ($("#fechacierre").val().trim() ==""){
-        alert("Seleccione una fecha de cierre");
+        alert("inserte una fecha de cierre no puede quedar vacio");
         valid = false;
     }
 
     if ($("#horacierre").val().trim() ==""){
-        alert("Seleccione una hora de cierre");
+        alert("Seleccione una hora de cierre no puede quedar vacio");
         valid = false;
     }
 
     if ($("#observaciones").val().trim() ==""){
-        alert("Anote las observaciones correspondientes");
+        alert("la casilla no puede quedar vacio");
         valid = false;
     }
 
