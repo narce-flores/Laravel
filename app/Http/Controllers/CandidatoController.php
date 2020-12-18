@@ -40,10 +40,10 @@ class CandidatoController extends Controller
         $perfil ="";
 
         $request->validate([
-        'nombrecompleto' => 'required|max:200',
-        'sexo' => 'required|max:1',
-        'foto' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'perfil' => 'required',
+            'nombrecompleto' => 'required|max:200',
+            'sexo' => 'required|max:1',
+            'foto' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'perfil' => 'required',
         ]);
 
         if ($request->hasFile('foto')){
@@ -104,10 +104,10 @@ class CandidatoController extends Controller
         $perfil ="";
 
         $request->validate([
-        'nombrecompleto' => 'required|max:200',
-        'sexo' => 'required|max:1',
-        'foto' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'perfil' => 'required',
+            'nombrecompleto' => 'required|max:200',
+            'sexo' => 'required|max:1',
+            'foto' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'perfil' => 'required',
         ]);
 
         if($request->hasFile('foto')){

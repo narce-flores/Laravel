@@ -31,7 +31,7 @@
 				<td>{{$candidato->sexo}}</td>
 				<td><a href="uploads/{{$candidato->perfil}}"> 
 					<img src="uploads/icon-pdf.png" alt ="pdf" width="100" height ="100">  </a> 
-				</td>
+			</td>
 				<td><a href="{{ route('candidato.edit', $candidato->id)}}"
 					class="btn btn-primary">Editar</a></td>
 				<td>

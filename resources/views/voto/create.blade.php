@@ -28,8 +28,7 @@
                         <option value="{{$eleccion->id}}">{{$eleccion->periodo}}</option>
                     @endforeach
                 </select>
-        
- </div>
+            </div>
             <div class="form-group">
                 @csrf
                 <label for="casilla_id">Casilla:</label>
