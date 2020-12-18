@@ -29,15 +29,15 @@
 				<td>
 				<form action="{{ route('rol.destroy', $rol->id)}}"
 					method="post">
-@csrf
-@method('DELETE')
-<button class="btn btn-danger" type="submit"
-onclick="return confirm('Esta seguro de borrar {{$rol->descripcion}}')" >Del</button>
-</form>
-</td>
-</tr>
-@endforeach
-</tbody>
-</table>
+					@csrf
+					@method('DELETE')
+					<button class="btn btn-danger" type="submit"
+					onclick="return confirm('Esta seguro de borrar {{$rol->descripcion}}')" >Del</button>
+				</form>
+				</td>
+			</tr>
+		@endforeach
+	</tbody>
+	</table>
 <div>
 @endsection
