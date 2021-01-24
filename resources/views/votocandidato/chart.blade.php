@@ -4,7 +4,7 @@
 
 <html>
   <head>
-    <h1>ELECCIONES</h1>
+    <h1>VOTOS</h1>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -20,7 +20,7 @@
         ]);
 
         var options = {
-          title: 'Votos de los Candidatos'
+          title: 'Votos'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));

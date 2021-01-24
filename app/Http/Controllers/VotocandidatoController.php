@@ -18,11 +18,11 @@ class VotocandidatoController extends Controller
      */
     public function index()
     {
-       $sql="  SELECT v.id as voto, c.nombrecompleto as candidato,  vc.votos
-        FROM votocandidato vc 
-        INNER JOIN voto v ON vc.voto_id = v.id
-        INNER JOIN candidato c ON vc.candidato_id = c.id
-        ORDER BY voto"; 
+        $sql="  SELECT v.id as voto, c.nombrecompleto as candidato,  vc.votos
+            FROM votocandidato vc 
+            INNER JOIN voto v ON vc.voto_id = v.id
+            INNER JOIN candidato c ON vc.candidato_id = c.id
+            ORDER BY voto"; 
 
         $votocandidatos = DB::select($sql);
         return view("votocandidato/list",compact("votocandidatos")); 
@@ -105,15 +105,24 @@ class VotocandidatoController extends Controller
 
     public function generatepdf()
     {
-      $sql="  SELECT v.id as voto, c.nombrecompleto as candidato,  vc.votos
-        FROM votocandidato vc 
-        INNER JOIN voto v ON vc.voto_id = v.id
-        INNER JOIN candidato c ON vc.candidato_id = c.id
-        ORDER BY voto"; 
+        $sql="  SELECT v.id as voto, c.nombrecompleto as candidato,  vc.votos
+            FROM votocandidato vc 
+            INNER JOIN voto v ON vc.voto_id = v.id
+            INNER JOIN candidato c ON vc.candidato_id = c.id
+            ORDER BY voto"; 
 
-        $votocandidatos = DB::select($sql);
-        $pdf = PDF::loadView('votocandidato/vista', ['votocandidatos'=>$votocandidatos]);
-        return $pdf->stream('votocandidato.pdf');
+        /*$votocandidatos = DB::select($sql);
+        $pdf = PDF::loadView('votocandidato/vistavotocand', ['votocandidatos'=>$votocandidatos]);
+        return $pdf->stream('archivo.pdf');*/
+
+        /*$votocandidatos = DB::select($sql);
+        $pdf = PDF::loadView('votocandidato/list', ['votocandidatos'=>$votocandidatos]);
+        return $pdf->download('archivo.pdf');*/
+
+        $html = "<div style='text-align:center;'><h1>PDF generado desde etiquetas html</h1>
+        <br><h3>&copy;Narce.dev</h3> </div>";
+        $pdf = PDF::loadHTML($html);
+        return $pdf->download('archivo.pdf');
     }
 
     public function generatechart()

@@ -72,7 +72,7 @@ class ImeiautorizadoController extends Controller
         
         Imeiautorizado::create($data);
         return redirect('imeiautorizado')->with('success',
-            ' guardado satisfactoriamente ...');
+            ' Guardado Satisfactoriamente ...');
     }
 
     /**
@@ -128,7 +128,7 @@ class ImeiautorizadoController extends Controller
 
         Imeiautorizado::find($id)->update($data);
         return redirect('imeiautorizado')->with('success',
-            ' Cambio realizado ...');
+            ' Cambio Realizado ...');
     }
 
     /**

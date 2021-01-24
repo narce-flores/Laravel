@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rol;
+
+use Barryvdh\DomPDF\Facade as PDF;
+
 class RolController extends Controller
 {
     /**
@@ -96,5 +99,23 @@ class RolController extends Controller
         $rol = Rol::find($id);
         $rol->delete();
         return redirect('rol');
+    }
+
+    public function generatepdf()
+    {
+
+        $roles = Rol::all();
+        $pdf = PDF::loadView('rol/list', ['roles'=>$roles]);
+        return $pdf->download('archivo.pdf');
+
+        /*$html = "<div style='text-align:center;'><h1>PDF generado desde etiquetas html</h1>
+        <br><h3>&copy;Narce.dev</h3> </div>";
+        $pdf = PDF::loadHTML($html);
+        return $pdf->download('archivo.pdf');*/
+
+        /*$roles = Rol::all();
+        return PDF::loadView('candidato/list', ['candidatos'=>$candidatos])
+            ->stream('archivo.pdf');*/
+
     }
 }

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Eleccion;
+
+use Barryvdh\DomPDF\Facade as PDF;
+
 class EleccionController extends Controller
 {
     /**
@@ -13,8 +16,8 @@ class EleccionController extends Controller
      */
     public function index()
     {
-          $elecciones = Eleccion::all();
-       return view('eleccion/list', compact('elecciones'));
+        $elecciones = Eleccion::all();
+        return view('eleccion/list', compact('elecciones'));
     }
 
     /**
@@ -111,4 +114,20 @@ class EleccionController extends Controller
         Eleccion::find($id)->delete();
         return redirect('eleccion');
     }
+
+    public function generatepdf()
+    {
+        $elecciones = Eleccion::all();
+        $pdf = PDF::loadView('eleccion/list', ['elecciones'=>$elecciones]);
+        return $pdf->download('archivo.pdf');
+        
+        /*$html = "<div style='text-align:center;'><h1>PDF generado desde etiquetas html</h1>
+        <br><h3>&copy;Narce.dev</h3> </div>";
+        $pdf = PDF::loadHTML($html);
+        return $pdf->download('archivo.pdf');*/
+
+        /*$elecciones = Eleccion::all();
+        return PDF::loadView('eleccion/list', ['elecciones'=>$elecciones])
+            ->stream('archivo.pdf');*/
+    }        
 }

@@ -12,6 +12,8 @@ use App\Models\Funcionariocasilla;
 
 use Illuminate\Support\Facades\DB;
 
+use Barryvdh\DomPDF\Facade as PDF;
+
 class FuncionariocasillaController extends Controller
 {
     /**
@@ -22,6 +24,18 @@ class FuncionariocasillaController extends Controller
     public function index()
     {
      
+      /*$sql = "SELECT fc.id, f.nombrecompleto as funcionario, c.ubicacion as casilla, r.descripcion as rol, e.periodo as eleccion 
+         
+            FROM funcionariocasilla fc INNER JOIN funcionario f ON fc.funcionario_id = f.id
+            INNER JOIN casilla c ON fc.casilla_id = c.id 
+            INNER JOIN rol r ON fc.rol_id = r.id
+            INNER JOIN eleccion e ON fc.eleccion_id = e.id";
+             
+        $funcionariocasillas = DB::select($sql);
+        return view("funcionariocasilla/list", 
+        compact("funcionariocasillas"));*/
+        
+
         $funcionariocasillas = DB::table('funcionariocasilla')
             ->join('funcionario', 'funcionariocasilla.funcionario_id', '=', 'funcionario.id')
             ->join('casilla', 'funcionariocasilla.casilla_id', '=', 'casilla.id')
@@ -32,9 +46,6 @@ class FuncionariocasillaController extends Controller
 
         return view("funcionariocasilla/list",
         compact("funcionariocasillas"));
-
-
-
     }
 
     /**
@@ -152,5 +163,28 @@ class FuncionariocasillaController extends Controller
     {
         Funcionariocasilla::find($id)->delete();
         return redirect('funcionariocasilla'); 
+    }
+
+    public function generatepdf()
+    {
+        $sql = "SELECT fc.id, f.nombrecompleto as funcionario, c.ubicacion as casilla, r.descripcion as rol, e.periodo as eleccion 
+         
+            FROM funcionariocasilla fc INNER JOIN funcionario f ON fc.funcionario_id = f.id
+                INNER JOIN casilla c ON fc.casilla_id = c.id 
+                INNER JOIN rol r ON fc.rol_id = r.id
+                INNER JOIN eleccion e ON fc.eleccion_id = e.id";
+
+        /*$funcionariocasillas = DB::select($sql);
+        $pdf = PDF::loadView('funcionariocasilla/list', ['funcionariocasillas'=>$funcionariocasillas]);
+        return $pdf->stream('archivo.pdf');*/
+
+        $funcionariocasillas = DB::select($sql);
+        $pdf = PDF::loadView('funcionariocasilla/list', ['funcionariocasillas'=>$funcionariocasillas]);
+        return $pdf->download('archivo.pdf');
+
+        /*$html = "<div style='text-align:center;'><h1>PDF generado desde etiquetas html</h1>
+        <br><h3>&copy;Narce.dev</h3> </div>";
+        $pdf = PDF::loadHTML($html);
+        return $pdf->download('archivo.pdf');*/
     }
 }

@@ -174,7 +174,7 @@ class VotoController extends Controller
             INNER JOIN casilla c ON v.casilla_id=c.id";
 
         $votos = DB::select($sql);
-        $pdf = PDF::loadView('voto/vista', ['votos'=>$votos]);
+        $pdf = PDF::loadView('voto/vistavotopdf', ['votos'=>$votos]);
         return $pdf->stream('voto.pdf');
     }
 }

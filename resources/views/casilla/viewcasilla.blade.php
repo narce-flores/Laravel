@@ -3,7 +3,7 @@
 <head>
 	<div style='text-align:center;'>	
    
-		<h1>PDF generado desde etiquetas html: Casilla</h1><br>
+		<h1>PDF HTML: Casilla</h1><br>
 </head>
    
    </div>

@@ -3,29 +3,28 @@
 <head>
 	<div style='text-align:center;'>	
    
-		<h1>PDF generado desde etiquetas html:</h1>
-		<h2> Voto</h2>
+		<h1>PDF Salto:</h1>
+		<h2> Voto Candidato</h2>
 		<br>
 </head>
    
    </div>
    <BODY>
 
-    <table class="table table-striped" align="center">
+   <table class="table table-striped" align="center">
 		<thead>
 			<tr>
-				<th align="center">ID</th>
-				<th align="center">ELECCION</th>
-				<th align="center">CASILLA</th>
-	
+				<th align="center">VOTO ID</th>
+				<th align="center">CANDIDATO</th>
+				<th align="center">VOTOS</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($votos as $voto)
+			@foreach($votocandidatos as $votocandidato)
 			<tr>
-				<td align="center">{{$voto->id}}</td>
-				<td>{{$voto->eleccion}}</td>
-				<td>{{$voto->casilla}}</td>
+				<td>{{$votocandidato->voto}}</td>
+				<td>{{$votocandidato->candidato}}</td>
+				<td>{{$votocandidato->votos}}</td>
 			</tr>
 		@endforeach
 	</tbody>
@@ -34,7 +33,7 @@
 <div>
 	<div style='text-align:center;'>	
    
-   		<h3>&copy;Wendy.dev</h3> 
+   		<h3>&copy;Narce.dev</h3> 
 </div>
 <script type="text/php">
 		if (isset($pdf) ) {

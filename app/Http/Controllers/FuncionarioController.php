@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Funcionario;
 
+use Barryvdh\DomPDF\Facade as PDF;
+
 class FuncionarioController extends Controller
 {
     /**
@@ -106,5 +108,22 @@ class FuncionarioController extends Controller
     {
         Funcionario::whereId($id)->delete();
         return redirect('funcionario');
+    }
+
+    public function generatepdf()
+    {
+
+        /*$funcionarios = Funcionario::all();
+        $pdf = PDF::loadView('funcionario/list', ['funcionarios'=>$funcionarios]);
+        return $pdf->download('archivo.pdf');*/
+        
+        /*$html = "<div style='text-align:center;'><h1>PDF generado desde etiquetas html</h1>
+        <br><h3>&copy;Narce.dev</h3> </div>";
+        $pdf = PDF::loadHTML($html);
+        return $pdf->download('archivo.pdf');*/
+
+        $funcionarios = Funcionario::all();
+        return PDF::loadView('funcionario/list', ['funcionarios'=>$funcionarios])
+            ->stream('archivo.pdf');
     }
 }

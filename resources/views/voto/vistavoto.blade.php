@@ -3,28 +3,29 @@
 <head>
 	<div style='text-align:center;'>	
    
-		<h1>PDF Con salto de Linea:</h1>
-		<h2> Voto Candidato</h2>
+		<h1>PDF HTML:</h1>
+		<h2> Votos</h2>
 		<br>
 </head>
    
    </div>
    <BODY>
 
-   <table class="table table-striped" align="center">
+    <table class="table table-striped" align="center">
 		<thead>
 			<tr>
-				<th align="center">VOTO ID</th>
-				<th align="center">CANDIDATO</th>
-				<th align="center">VOTOS</th>
+				<th align="center">ID</th>
+				<th align="center">ELECCION</th>
+				<th align="center">CASILLA</th>
+	
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($votocandidatos as $votocandidato)
+			@foreach($votos as $voto)
 			<tr>
-				<td>{{$votocandidato->voto}}</td>
-				<td>{{$votocandidato->candidato}}</td>
-				<td>{{$votocandidato->votos}}</td>
+				<td align="center">{{$voto->id}}</td>
+				<td>{{$voto->eleccion}}</td>
+				<td>{{$voto->casilla}}</td>
 			</tr>
 		@endforeach
 	</tbody>
@@ -33,7 +34,7 @@
 <div>
 	<div style='text-align:center;'>	
    
-   		<h3>&copy;Mireya.dev</h3> 
+   		<h3>&copy;Narce.dev</h3> 
 </div>
 <script type="text/php">
 		if (isset($pdf) ) {

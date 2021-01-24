@@ -10,6 +10,7 @@ use App\Models\Eleccion;
 use App\Models\Eleccioncomite;
 
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class EleccioncomiteController extends Controller
 {
@@ -20,7 +21,7 @@ class EleccioncomiteController extends Controller
      */
     public function index()
     {
-       /* $sql = "SELECT ec.id, e.periodo as eleccion, f.nombrecompleto as funcionario, 
+       /*$sql = "SELECT ec.id, e.periodo as eleccion, f.nombrecompleto as funcionario, 
         r.descripcion as rol 
             FROM eleccioncomite ec INNER JOIN eleccion e ON ec.eleccion_id = e.id
             INNER JOIN funcionario f ON ec.funcionario_id = f.id
@@ -153,5 +154,27 @@ class EleccioncomiteController extends Controller
     {
         Eleccioncomite::find($id)->delete();
         return redirect('eleccioncomite'); 
+    }
+
+    public function generatepdf()
+    {
+        $sql = "SELECT ec.id, e.periodo as eleccion, f.nombrecompleto as funcionario, 
+        r.descripcion as rol 
+            FROM eleccioncomite ec INNER JOIN eleccion e ON ec.eleccion_id = e.id
+            INNER JOIN funcionario f ON ec.funcionario_id = f.id
+            INNER JOIN rol r ON ec.rol_id = r.id ";
+
+        /*$eleccioncomites = DB::select($sql);
+        $pdf = PDF::loadView('eleccioncomite/list', ['eleccioncomites'=>$eleccioncomites]);
+        return $pdf->stream('eleccioncomite.pdf');*/
+
+        $eleccioncomites = DB::select($sql);
+        $pdf = PDF::loadView('eleccioncomite/list', ['eleccioncomites'=>$eleccioncomites]);
+        return $pdf->download('archivo.pdf');
+
+        /*$html = "<div style='text-align:center;'><h1>PDF generado desde etiquetas html</h1>
+        <br><h3>&copy;Narce.dev</h3> </div>";
+        $pdf = PDF::loadHTML($html);
+        return $pdf->download('archivo.pdf');*/
     }
 }

@@ -1,130 +1,117 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Casilla;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade as PDF; //--- Se agregó esta línea
 
 class CasillaController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
         $casillas = Casilla::all();
- return view('casilla/list', compact('casillas'));
+        return view('casilla/list', compact('casillas'));
     }
-
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function create()
     {
         return view('casilla/create');
     }
-
     /**
-     * Store a ne wly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param \Illuminate\Http\Request $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request)
     {
         $validacion = $request->validate([
- 'ubicacion' => 'required|max:100',
- ]);
+            'ubicacion' => 'required|max:100',
+        ]);
 
- $casilla = Casilla::create($validacion);
- 
- return redirect('casilla')->with('success',
- $casilla->ubicacion . ' guardado satisfactoriamente ...'); 
+        $casilla = Casilla::create($validacion);
+        return redirect('casilla')->with('success',
+        $casilla->ubicacion . ' guardado satisfactoriamente ...');
     }
-
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param int $id
+    * @return \Illuminate\Http\Response
+    */
     public function show($id)
     {
-        //
+    //
     }
-
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param int $id
+    * @return \Illuminate\Http\Response
+    */
     public function edit($id)
     {
         $casilla = Casilla::find($id);
- return view('casilla/edit',
- compact('casilla'));
-
+        return view('casilla/edit',compact('casilla'));
     }
-
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param \Illuminate\Http\Request $request
+    * @param int $id
+    * @return \Illuminate\Http\Response
+    */
     public function update(Request $request, $id)
     {
         $validacion = $request->validate([
- 'ubicacion' => 'required|max:100',
- ]);
- Casilla::whereId($id)->update($validacion);
- return redirect('casilla')
- ->with('success', 'Actualizado correctamente...');
+            'ubicacion' => 'required|max:100',
+        ]);
 
+        Casilla::whereId($id)->update($validacion);
+        return redirect('casilla')
+        ->with('success', 'Actualizado correctamente...');
     }
-
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    ** @param int $id
+    * @return \Illuminate\Http\Response
+    */
     public function destroy($id)
     {
         $casilla = Casilla::find($id);
-         $casilla->delete();
-         return redirect('casilla');
-
+        $casilla->delete();
+        return redirect('casilla');
     }
 
     public function generatepdf()
-	{
-		/*$casillas = Casilla::all();
-		$pdf = PDF::loadView('casilla/list', ['casillas'=>$casillas]);
-		return $pdf->download('archivo.pdf');*/
+    {
 
+        /*$casillas = Casilla::all();
+        $pdf = PDF::loadView('casilla/list', ['casillas'=>$casillas]);
+        return $pdf->download('archivo.pdf');*/
+        
         /*$html = "<div style='text-align:center;'><h1>PDF generado desde etiquetas html</h1>
-        <br><h3>&copy;narce.dev</h3> </div>";
+        <br><h3>&copy;Narce.dev</h3> </div>";
         $pdf = PDF::loadHTML($html);
         return $pdf->download('archivo.pdf');*/
 
         /*$casillas = Casilla::all();
         return PDF::loadView('casilla/list', ['casillas'=>$casillas])
-        ->stream('archivo.pdf');*/
+            ->stream('archivo.pdf');*/
 
+            //Numero de paginas
         $casillas = Casilla::all();
         return PDF::loadView('casilla/viewcasilla', ['casillas'=>$casillas])
             ->stream('archivo.pdf');
 
-       
+    }
 
-	}
 }
- 
