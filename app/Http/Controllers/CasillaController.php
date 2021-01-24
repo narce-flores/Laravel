@@ -119,12 +119,11 @@ class CasillaController extends Controller
         return PDF::loadView('casilla/list', ['casillas'=>$casillas])
         ->stream('archivo.pdf');*/
 
-        /*$casillas = Casilla::all();
+        $casillas = Casilla::all();
         return PDF::loadView('casilla/viewcasilla', ['casillas'=>$casillas])
-            ->stream('archivo.pdf');*/
+            ->stream('archivo.pdf');
 
-        $file = PDF::loadView('casilla/list', ['casillas'=>$casillas])
-            ->save(storage_path('app/public/') . 'casillas.pdf');
+       
 
 	}
 }

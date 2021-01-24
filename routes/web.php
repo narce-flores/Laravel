@@ -26,7 +26,7 @@ use App\Http\Controllers\VotocandidatoController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('votocandidato/chart', [VotocandidatoController::class, 'generatechart']);
 Route::get('casilla/pdf', [CasillaController::class, 'generatepdf']);
 Route::resource('casilla', CasillaController::class);
 Route::resource('candidato', CandidatoController::class);

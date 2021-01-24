@@ -13,7 +13,7 @@ class UserChartController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

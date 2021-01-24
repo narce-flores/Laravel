@@ -18,6 +18,7 @@
 				</ul>
 			</div><br />
 		@endif
+		
 		<form method="post" action="{{ route('votocandidato.update', $votocandidato->id) }} " enctype="multipart/form-data">
 			@method('PUT')
 			{{ csrf_field() }}

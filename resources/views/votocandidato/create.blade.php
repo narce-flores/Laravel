@@ -46,8 +46,6 @@
 				<label for="votos">Votos:</label>
 				<input type="int" class="form-control" name="votos"/>
 			</div>
-
-
 			
 			<button type="submit" class="btn btn-primary">Guardar</button>
 		</form>

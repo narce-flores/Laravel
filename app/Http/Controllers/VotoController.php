@@ -8,6 +8,9 @@ use App\Models\Eleccion;
 use App\Models\Casilla;
 use App\Models\Votocandidato;
 use App\Models\Voto;
+use Barryvdh\DomPDF\Facade as PDF; //--- Se agregó esta línea
+use Illuminate\Support\Facades\DB;
+
 class VotoController extends Controller
 {
     /**
@@ -17,6 +20,13 @@ class VotoController extends Controller
      */
     public function index()
     {
+        $sql = "SELECT v.id, e.periodo as eleccion, c.ubicacion as casilla, v.evidencia 
+            FROM voto v 
+            INNER JOIN eleccion e ON v.eleccion_id=e.id 
+            INNER JOIN casilla c ON v.casilla_id=c.id";
+
+        $votos = DB::select($sql);
+        return view("voto/list", compact("votos")); 
     }
 
     /**
@@ -26,11 +36,13 @@ class VotoController extends Controller
      */
     public function create()
     {
+
         $casillas   = Casilla::all();
         $candidatos = Candidato::all();
         $elecciones = Eleccion::all();
         return view("voto/create",
         compact("casillas","candidatos","elecciones"));
+    
 
     }
 
@@ -40,7 +52,7 @@ class VotoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+   public function store(Request $request)
     {
 
         //print_r($_POST); exit;
@@ -78,7 +90,9 @@ class VotoController extends Controller
                 ];
             Votocandidato::create($datavotocandidato);
         }
-        echo "Guardado satisfactoriamente ...";
+        return redirect('voto')->with('success',
+            ' guardado satisfactoriamente ...');
+        //echo "Guardado satisfactoriamente ...";
     }
 
     /**
@@ -100,12 +114,12 @@ class VotoController extends Controller
      */
     public function edit($id)
     {
-        /*$elecciones = Eleccion::all();
+
+        $elecciones = Eleccion::all();
         $casillas = Casilla::all();
         $voto = Voto::find($id);
-
-        return view("voto/edit", 
-        compact("voto","elecciones","casillas"));*/
+        
+        return view('voto/edit',compact("voto","elecciones","casillas"));
     }
 
     /**
@@ -117,23 +131,26 @@ class VotoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /*$request->validate([
+       $request->validate([
             'casilla_id'=>'required|integer',
             'eleccion_id'=>'required|integer',
-            'evidencia' => 'required|max:200'
-
+            'evidencia'=>'required'
         ]);
-        
+
+        if($request->hasFile('evidencia')){
+           $evidencia = $request->evidencia->getClientOriginalName();
+           $request->evidencia->move(public_path('uploads'), $evidencia);
+        }
+
         $data = [
             "casilla_id" => $request->casilla_id ,
             "eleccion_id" => $request->eleccion_id,
-            "evidencia" => $request->evidencia
+            "evidencia"=> $evidencia
         ];
-        
-        Voto::find($id)->update($data);
-        return redirect('voto')->with('success',
-            ' Cambio realizado ...');*/
 
+        Voto::whereId($id)->update($data);
+        return redirect('voto')
+        ->with('success', 'Actualizado correctamente...');
     }
 
     /**
@@ -144,7 +161,20 @@ class VotoController extends Controller
      */
     public function destroy($id)
     {
-        /*Voto::find($id)->delete();
-        return redirect('voto');*/
+        $voto = Voto::find($id);
+        $voto->delete();
+        return redirect('voto');
+    }
+
+    public function generatepdf()
+    {
+        $sql = "SELECT v.id, e.periodo as eleccion, c.ubicacion as casilla, v.evidencia 
+            FROM voto v 
+            INNER JOIN eleccion e ON v.eleccion_id=e.id 
+            INNER JOIN casilla c ON v.casilla_id=c.id";
+
+        $votos = DB::select($sql);
+        $pdf = PDF::loadView('voto/vista', ['votos'=>$votos]);
+        return $pdf->stream('voto.pdf');
     }
 }
